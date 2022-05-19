@@ -1,0 +1,42 @@
+@-webkit-keyframes spin-right {
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+:root {
+    --rotate-time:60s;
+    --fade_time: 500ms;
+    --orbit-circle-color-1: #283b95;
+    --orbit-circle-color-2: #17b2c3;
+    --orbit-distance: 200;
+    --orbit-60-x: 173;
+    --orbit-60-y: 100;
+}
+
+
+
+body {
+    display: grid;
+    place-content: center;
+    font-family: "Comic Sans MS", serif;
+}
+
+.page {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: linear-gradient(mediumpurple,steelblue);
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
