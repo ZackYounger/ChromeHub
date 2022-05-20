@@ -1,3 +1,7 @@
+const weatherKey = "b77f0aa180c13145e170900784035320"
+const coords = [51.561190,-0.145670]
+const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${coords[0]}&lon=${coords[1]}&limit=5&appid=${weatherKey}`;
+
 const root = document.querySelector(':root');
 
 const sitesURLs = ['https://github.com/ZackYounger',
@@ -85,4 +89,11 @@ window.onload  = function () {
     }
 
     window.addEventListener("keypress", enter);
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        const {main, name, sys, weather} = data;
+        console.log(data)
+    })
 };
