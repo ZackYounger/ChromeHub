@@ -19,11 +19,27 @@ var selectionDistance = 80;
 var search;
 
 window.onload  = function () {
+    let metaData;
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+    metaData = data['list'];
+    })
+    console.log(metaData)
+
     const selectorMenu = document.getElementById('selectorMenu');
     const selector = document.getElementById('selector');
     const selectorData = selector.getBoundingClientRect();
     const containers = document.getElementsByClassName('svg-container');
     search = document.getElementsByClassName('searchbar2')[0];
+    const weatherUnits = document.getElementsByClassName('weather-unit');
+
+    console.log(metaData)
+    console.log(metaData['0'])
+
+    weatherElements = weatherUnits[0].children;
+    weatherElements[0].style.content = metaData['0']['main']['temp'];
+    weatherElements[1].style.content = metaData[0]['dt_txt'];
 
     selector.style.transition = '0ms';
     root.style.setProperty('--distanceSelector', "0%");
@@ -90,10 +106,4 @@ window.onload  = function () {
 
     window.addEventListener("keypress", enter);
 
-    fetch(url)
-    .then(response => response.json())
-    .then(data => {
-        const {main, name, sys, weather} = data;
-        console.log(data)
-    })
 };

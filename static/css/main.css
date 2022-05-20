@@ -62,12 +62,10 @@ body {
 }
 
 #selectorMenu {
+    position: absolute;
     background: mediumslateblue;
     border-radius: 35px;
-    position: absolute;
-    top: 50%;
-    right: 5%;
-    transform: translate(0, -50%);
+    right: 8%;
 }
 
 #selector {
@@ -108,7 +106,21 @@ img {
     transform: translate(-50%, -50%);
 }
 
+#weather-container {
+    position: absolute;
+    background: transparent;
+    width: auto;
+    height: auto;
+    left: 8%;
+    bottom: 15%;
+}
 
+.weather-unit {
+    background: antiquewhite;
+    border-radius: 20px;
+    width: 100px;
+    height: 150px;
+}
 
 
 
