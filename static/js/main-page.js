@@ -1,8 +1,7 @@
 const weatherKey = "b77f0aa180c13145e170900784035320"
 const coords = [51.561190,-0.145670]
-const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${coords[0]}&lon=${coords[1]}&limit=5&appid=${weatherKey}`;
 
-const root = document.querySelector(':root');
+const weatherURL = `https://api.openweathermap.org/data/2.5/onecall?&units=metric&exclude=minutely&lat=${coords[0]}&lon=${coords[1]}&appid=${weatherKey}`;
 
 const sitesURLs = ['https://github.com/ZackYounger',
                    'https://hero.highgateschool.org.uk/planner',
@@ -11,6 +10,12 @@ const sitesURLs = ['https://github.com/ZackYounger',
                    'https://twitter.com/',
                    'https://www.youtube.com/'];
 
+const weekdays = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+
+const root = document.querySelector(':root');
+
 var closest;
 var distance;
 var pushDistance;
@@ -18,28 +23,52 @@ var highlightDistance = 400;
 var selectionDistance = 80;
 var search;
 
+async function doWeather() {
+    const date = new Date();
+
+    document.getElementsByClassName('date-day')[0].innerHTML = weekdays[date.getDay()-1]; //assign day
+    document.getElementsByClassName('date-full')[0].innerHTML = date.getDate().toString() + " " + months[date.getMonth()].toString() + " " + date.getFullYear().toString();
+
+    var response = await fetch(weatherURL);
+    var data = (await response.json());
+    console.log(data);
+    var weatherData = data;
+    console.log(data);
+
+    document.getElementsByClassName('weather-temp')[0].innerHTML = (Math.round(weatherData['current']['temp']*10)/10).toString() + "°C";
+    document.getElementsByClassName('weather-min')[0].innerHTML = Math.round(weatherData['daily'][0]['temp']['min']).toString() + "°C";
+    document.getElementsByClassName('weather-max')[0].innerHTML = Math.round(weatherData['daily'][0]['temp']['max']).toString() + "°C";
+    document.getElementsByClassName('date-time')[0].innerHTML = 'London, GB';
+    document.getElementsByClassName('precipitation')[0].innerHTML = weatherData['current']['precipitation'];
+
+    const mySentence = weatherData['current']['weather'][0]['description'];
+    const words = mySentence.split(" ");
+
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+    }
+    newWords = words.join(" ");
+
+    document.getElementsByClassName('weather-desc')[0].innerHTML = newWords;
+
+    weatherElements[0].innerHTML = outputTemp.toString();
+    weatherElements[1].innerHTML = weatherData[0]['dt_txt'];
+
+    var weatherIcon = document.getElementById('icon1');
+
+    console.log(weatherData)
+}
+
+
 window.onload  = function () {
-    let metaData;
-    fetch(url)
-    .then(response => response.json())
-    .then(data => {
-    metaData = data['list'];
-    })
-    console.log(metaData)
 
     const selectorMenu = document.getElementById('selectorMenu');
     const selector = document.getElementById('selector');
     const selectorData = selector.getBoundingClientRect();
     const containers = document.getElementsByClassName('svg-container');
     search = document.getElementsByClassName('searchbar2')[0];
-    const weatherUnits = document.getElementsByClassName('weather-unit');
 
-    console.log(metaData)
-    console.log(metaData['0'])
-
-    weatherElements = weatherUnits[0].children;
-    weatherElements[0].style.content = metaData['0']['main']['temp'];
-    weatherElements[1].style.content = metaData[0]['dt_txt'];
+    doWeather();
 
     selector.style.transition = '0ms';
     root.style.setProperty('--distanceSelector', "0%");
@@ -96,10 +125,10 @@ window.onload  = function () {
     window.addEventListener('mousedown',mouseclick);
 
     function enter(event) {
-        console.log('enter unction')
+        console.log('enter unction');
         if (event.key === "Enter") {
-            console.log("enter")
-            redirectLink = "https://www.google.com/search?q=" + search.value.replaceAll(" ","+")
+            console.log("enter");
+            redirectLink = "https://www.google.com/search?q=" + search.value.replaceAll(" ","+");
             window.location.href = redirectLink;
         }
     }
