@@ -109,8 +109,9 @@ body {
 
 .weather-container {
 	position: absolute;
-	bottom: 25px;
+	bottom: 15px;
 	left: 25px;
+	width: 85%;
 }
 
 .weather-icon.feather {
@@ -125,14 +126,14 @@ body {
 }
 
 .weather-bound {
-	position: relative;
+	display: grid;
+	place-content: end;
 	margin-bottom: 0;
 	margin-top: 5px;
-	transform: translateX(200px);
 }
 
 .weather-desc {
-	margin: 0;
+	margin-top: 5px;
 }
 
 .info-side {

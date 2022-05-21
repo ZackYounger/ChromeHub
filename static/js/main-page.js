@@ -24,6 +24,7 @@ var selectionDistance = 80;
 var search;
 
 async function doWeather() {
+
     const date = new Date();
 
     document.getElementsByClassName('date-day')[0].innerHTML = weekdays[date.getDay()-1]; //assign day
@@ -33,13 +34,32 @@ async function doWeather() {
     var data = (await response.json());
     console.log(data);
     var weatherData = data;
-    console.log(data);
+
+
+    //collate data
+    var pushData = [weatherData['current'],
+    weatherData['daily'][1],
+    weatherData['daily'][2],
+    weatherData['daily'][3]];
+
+    var dayButtons = document.getElementsByClassName('week-list')[0];
+    console.log(dayButtons)
+    let i = 0;
+    for (day of dayButtons.getElementsByTagName('li')) {
+        day.getElementsByClassName('day-name')[0].innerHTML = weekdays[(date.getDay()-1+i)%weekdays.length];
+        i++;
+        console.log(day.getElementsByClassName('li').innerHTML)
+    }
+
+    console.log(pullData);
 
     document.getElementsByClassName('weather-temp')[0].innerHTML = (Math.round(weatherData['current']['temp']*10)/10).toString() + "°C";
     document.getElementsByClassName('weather-min')[0].innerHTML = Math.round(weatherData['daily'][0]['temp']['min']).toString() + "°C";
     document.getElementsByClassName('weather-max')[0].innerHTML = Math.round(weatherData['daily'][0]['temp']['max']).toString() + "°C";
     document.getElementsByClassName('date-time')[0].innerHTML = 'London, GB';
-    document.getElementsByClassName('precipitation')[0].innerHTML = weatherData['current']['precipitation'];
+    document.getElementsByClassName('value precipitation')[0].innerHTML = weatherData['daily'][0]['pop'].toString() + "%";
+    document.getElementsByClassName('value humidity')[0].innerHTML = weatherData['current']['humidity'].toString() + "%";
+    document.getElementsByClassName('value windspeed')[0].innerHTML = weatherData['current']['wind_speed'].toString() + " m/s";
 
     const mySentence = weatherData['current']['weather'][0]['description'];
     const words = mySentence.split(" ");
