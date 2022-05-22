@@ -10,7 +10,8 @@ const sitesURLs = ['https://github.com/ZackYounger',
                    'https://twitter.com/',
                    'https://www.youtube.com/'];
 
-const weekdays = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const weekdaysShort = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
 
@@ -27,35 +28,43 @@ async function doWeather() {
 
     const date = new Date();
 
-    document.getElementsByClassName('date-day')[0].innerHTML = weekdays[date.getDay()-1]; //assign day
+    document.getElementsByClassName('date-day')[0].innerHTML = weekdays[date.getDay()]; //assign day
     document.getElementsByClassName('date-full')[0].innerHTML = date.getDate().toString() + " " + months[date.getMonth()].toString() + " " + date.getFullYear().toString();
 
     var response = await fetch(weatherURL);
     var data = (await response.json());
-    console.log(data);
     var weatherData = data;
 
 
     //collate data
-    var pushData = [weatherData['current'],
-    weatherData['daily'][1],
-    weatherData['daily'][2],
-    weatherData['daily'][3]];
+    var pushData = [];
 
     var dayButtons = document.getElementsByClassName('week-list')[0];
-    console.log(dayButtons)
     let i = 0;
     for (day of dayButtons.getElementsByTagName('li')) {
-        day.getElementsByClassName('day-name')[0].innerHTML = weekdays[(date.getDay()-1+i)%weekdays.length];
+        const dayData = {};
+        dayData['fullDay'] = weekdaysShort[(date.getDay()+i)%weekdays.length];
+        dayData['shortDay'] = weekdaysShort[(date.getDay()+i)%weekdaysShort.length];
+        dayData['temp'] = Math.round(weatherData['daily'][i]['temp']['day']).toString() + "°C";
+        dayData['tempMax'] = Math.round(weatherData['daily'][i]['temp']['max']).toString() + "°C";
+        dayData['tempMin'] = Math.round(weatherData['daily'][i]['temp']['min']).toString() + "°C";
+        dayData['precipitation'] = (weatherData['daily'][i]['pop']*100).toString() + "%";
+        dayData['humidity'] = (weatherData['daily'][i]['humidity']*100).toString() + "%";
+        dayData['windspeed'] =weatherData['daily'][i]['wind_speed'].toString() + " m/s";
+
+        pushData.push(dayData);
+
+        day.getElementsByClassName('day-name')[0].innerHTML = dayData['shortDay'];
+        day.getElementsByClassName('min-temp')[0].innerHTML = dayData['tempMin'];
+        day.getElementsByClassName('max-temp')[0].innerHTML = dayData['tempMax'];
         i++;
-        console.log(day.getElementsByClassName('li').innerHTML)
     }
 
-    console.log(pullData);
+    console.log(pushData);
 
     document.getElementsByClassName('weather-temp')[0].innerHTML = (Math.round(weatherData['current']['temp']*10)/10).toString() + "°C";
-    document.getElementsByClassName('weather-min')[0].innerHTML = Math.round(weatherData['daily'][0]['temp']['min']).toString() + "°C";
-    document.getElementsByClassName('weather-max')[0].innerHTML = Math.round(weatherData['daily'][0]['temp']['max']).toString() + "°C";
+    //document.getElementsByClassName('weather-bound min-temp')[0].innerHTML = Math.round(weatherData['daily'][0]['temp']['min']).toString() + "°C";
+    //document.getElementsByClassName('weather-bound max-temp')[0].innerHTML = Math.round(weatherData['daily'][0]['temp']['max']).toString() + "°C";
     document.getElementsByClassName('date-time')[0].innerHTML = 'London, GB';
     document.getElementsByClassName('value precipitation')[0].innerHTML = weatherData['daily'][0]['pop'].toString() + "%";
     document.getElementsByClassName('value humidity')[0].innerHTML = weatherData['current']['humidity'].toString() + "%";
@@ -75,13 +84,17 @@ async function doWeather() {
     weatherElements[1].innerHTML = weatherData[0]['dt_txt'];
 
     var weatherIcon = document.getElementById('icon1');
-
-    console.log(weatherData)
 }
 
 
 window.onload  = function () {
 
+    //weather elements
+    dayButtons = document.getElementsByClassName('dayButton');
+    activeDayButton = dayButtons[0];
+    console.log(dayButtons)
+
+    //url selector elements
     const selectorMenu = document.getElementById('selectorMenu');
     const selector = document.getElementById('selector');
     const selectorData = selector.getBoundingClientRect();
@@ -129,30 +142,35 @@ window.onload  = function () {
 
         root.style.setProperty('--mouseX', event.clientX.toString() + "px");
         root.style.setProperty('--mouseY', event.clientY.toString() + "px");
-    }
 
+
+
+        //selecting Day for weather
+        for (i=0;i<3;i++) {
+            dayButtons[i].onclick = function() {
+                console.log(dayButtons[i])
+                dayButtons[i].classList.add('active')
+            }
+        }
+    }
     window.addEventListener('mousemove', mousemove);
 
+
     function mouseclick(event) {
-        console.log(distance , selectionDistance/2)
         if (distance < selectionDistance) {
             const index = containerCoords.indexOf(closest);
             const redirectLink = sitesURLs[index];
             window.location.href = redirectLink;
         }
     }
-
     window.addEventListener('mousedown',mouseclick);
 
     function enter(event) {
         console.log('enter unction');
         if (event.key === "Enter") {
-            console.log("enter");
             redirectLink = "https://www.google.com/search?q=" + search.value.replaceAll(" ","+");
             window.location.href = redirectLink;
         }
     }
-
     window.addEventListener("keypress", enter);
-
 };

@@ -223,6 +223,13 @@ body {
 	padding: 25px 35px;
 }
 
+.max-temp {
+	color: #f3390d;
+}
+.min-temp {
+	color: #005fbb;
+}
+
 .location-button {
 	outline: none;
 	width: 100%;
