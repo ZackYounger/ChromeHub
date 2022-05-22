@@ -4,11 +4,11 @@ const coords = [51.561190,-0.145670]
 const weatherURL = `https://api.openweathermap.org/data/2.5/onecall?&units=metric&exclude=minutely&lat=${coords[0]}&lon=${coords[1]}&appid=${weatherKey}`;
 
 const sitesURLs = ['https://github.com/ZackYounger',
-                   'https://hero.highgateschool.org.uk/planner',
-                   'https://outlook.office.com/mail/',
-                   'https://www.twitch.tv/',
+                   'https://www.youtube.com/',
                    'https://twitter.com/',
-                   'https://www.youtube.com/'];
+                   'https://www.twitch.tv/',
+                   'https://hero.highgateschool.org.uk/planner',
+                   'https://outlook.office.com/mail/'];
 
 const weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const weekdaysShort = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -19,11 +19,14 @@ const root = document.querySelector(':root');
 
 var closest;
 var distance;
+var containersX;
+var accContainersX;
 var pushDistance;
 var highlightDistance = 400;
 var selectionDistance = 80;
 var search;
 
+var pushData = [];
 async function doWeather() {
 
     const date = new Date();
@@ -37,7 +40,6 @@ async function doWeather() {
 
 
     //collate data
-    var pushData = [];
 
     var dayButtons = document.getElementsByClassName('week-list')[0];
     let i = 0;
@@ -49,7 +51,7 @@ async function doWeather() {
         dayData['tempMax'] = Math.round(weatherData['daily'][i]['temp']['max']).toString() + "°C";
         dayData['tempMin'] = Math.round(weatherData['daily'][i]['temp']['min']).toString() + "°C";
         dayData['precipitation'] = (weatherData['daily'][i]['pop']*100).toString() + "%";
-        dayData['humidity'] = (weatherData['daily'][i]['humidity']*100).toString() + "%";
+        dayData['humidity'] = (weatherData['daily'][i]['humidity']).toString() + "%";
         dayData['windspeed'] =weatherData['daily'][i]['wind_speed'].toString() + " m/s";
 
         pushData.push(dayData);
@@ -87,6 +89,14 @@ async function doWeather() {
 }
 
 
+function updateWeatherStats (stats) {
+    document.getElementsByClassName('value precipitation')[0].innerHTML = stats['precipitation'];
+    document.getElementsByClassName('value humidity')[0].innerHTML = stats['humidity'];
+    document.getElementsByClassName('value windspeed')[0].innerHTML = stats['windspeed'];
+
+}
+
+
 window.onload  = function () {
 
     //weather elements
@@ -106,8 +116,8 @@ window.onload  = function () {
     selector.style.transition = '0ms';
     root.style.setProperty('--distanceSelector', "0%");
 
-    var containersX = containers[0].getBoundingClientRect().x + containers[0].getBoundingClientRect().width/2 - selectorData.width/2;
-    var accContainersX = containersX + selectorData.width/2;
+    containersX = containers[0].getBoundingClientRect().x + containers[0].getBoundingClientRect().width/2 - selectorData.width/2;
+    accContainersX = containersX + selectorData.width/2;
     const containerHeight = containers[0].getBoundingClientRect().height;
 
     const containerCoords = [];
@@ -144,14 +154,28 @@ window.onload  = function () {
         root.style.setProperty('--mouseY', event.clientY.toString() + "px");
 
 
-
-        //selecting Day for weather
-        for (i=0;i<3;i++) {
-            dayButtons[i].onclick = function() {
-                console.log(dayButtons[i])
-                dayButtons[i].classList.add('active')
-            }
+        // incoming jank
+        dayButtons[0].onclick = function () {
+            for (button of dayButtons) {button.classList.remove('active')}
+            dayButtons[0].classList.add('active')
+            updateWeatherStats(pushData[0])
         }
+        dayButtons[1].onclick = function () {
+            for (button of dayButtons) {button.classList.remove('active')}
+            dayButtons[1].classList.add('active')
+            updateWeatherStats(pushData[1])
+        }
+        dayButtons[2].onclick = function () {
+            for (button of dayButtons) {button.classList.remove('active')}
+            dayButtons[2].classList.add('active')
+            updateWeatherStats(pushData[2])
+        }
+        dayButtons[3].onclick = function () {
+            for (button of dayButtons) {button.classList.remove('active')}
+            dayButtons[3].classList.add('active')
+            updateWeatherStats(pushData[3])
+        }
+
     }
     window.addEventListener('mousemove', mousemove);
 
@@ -173,4 +197,13 @@ window.onload  = function () {
         }
     }
     window.addEventListener("keypress", enter);
+
+
+    function resize() {
+        console.log('resize')
+        containersX = containers[0].getBoundingClientRect().x + containers[0].getBoundingClientRect().width/2 - selectorData.width/2;
+        accContainersX = containersX + selectorData.width/2;
+        console.log(accContainersX)
+    }
+    window.addEventListener('resize',resize)
 };

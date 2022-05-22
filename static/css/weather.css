@@ -230,6 +230,10 @@ body {
 	color: #005fbb;
 }
 
+.smoothing {
+	transition: all 500ms;
+}
+
 .location-button {
 	outline: none;
 	width: 100%;
