@@ -20,7 +20,7 @@ body {
     background: mediumslateblue;
     border-radius: 35px;
     right: 8%;
-    top: 7%;
+    top: 9%;
 }
 
 #selector {
@@ -48,8 +48,8 @@ body {
 }
 
 .svg-container {
-    width: 7.5rem;
-    height: 7.5rem;
+    width: 8rem;
+    height: 8rem;
     border-radius: 30%;
 }
 

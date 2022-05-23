@@ -28,7 +28,9 @@ var search;
 
 var pushData = [];
 
-var heroCookies = {'SessionSecureA':'bdgYqXxhVYAlxaONmsl0PsvWzEWPPSVnD6Xjk68HonMxtOuI9Qv4sm3u7v3ev1EWaOw=',
+
+
+/*var heroCookies = {'SessionSecureA':'bdgYqXxhVYAlxaONmsl0PsvWzEWPPSVnD6Xjk68HonMxtOuI9Qv4sm3u7v3ev1EWaOw=',
 'SessionSecureB':''}
 
 fetch('https://hero.highgateschool.org.uk/planner',
@@ -53,7 +55,23 @@ fetch('https://hero.highgateschool.org.uk/planner',
     .catch(function (response) {
         // "Not Found"
         console.log(response.statusText);
-    });
+    });*/
+
+
+
+const find = require('modules/local-devices');
+
+find().then(devices => {
+  devices /*
+  [
+    { name: '?', ip: '192.168.0.10', mac: '...' },
+    { name: '...', ip: '192.168.0.17', mac: '...' },
+    { name: '...', ip: '192.168.0.21', mac: '...' },
+    { name: '...', ip: '192.168.0.22', mac: '...' }
+  ]
+  */
+})
+
 
 
 
