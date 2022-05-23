@@ -27,6 +27,36 @@ var selectionDistance = 80;
 var search;
 
 var pushData = [];
+
+var heroCookies = {'SessionSecureA':'bdgYqXxhVYAlxaONmsl0PsvWzEWPPSVnD6Xjk68HonMxtOuI9Qv4sm3u7v3ev1EWaOw=',
+'SessionSecureB':''}
+
+fetch('https://hero.highgateschool.org.uk/planner',
+    {headers: {
+    'User-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36',
+    'access-control-allow-origin:':'*'}}
+    )
+    .then(function (response) {
+        console.log(response)
+        switch (response.status) {
+            // status "OK"
+            case 200:
+                return response.text();
+            // status "Not Found"
+            case 404:
+                throw response;
+        }
+    })
+    .then(function (template) {
+        console.log(template);
+    })
+    .catch(function (response) {
+        // "Not Found"
+        console.log(response.statusText);
+    });
+
+
+
 async function doWeather() {
 
     const date = new Date();

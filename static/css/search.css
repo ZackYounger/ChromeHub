@@ -48,8 +48,8 @@
     /* border: green solid 4px; */
 }
 
+}
 .search {
-    width: 100%;
     max-width: 60%;
     margin: 0 auto;
     min-height: 120vmin;
@@ -59,6 +59,7 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    box-shadow: 0 33px 99px 0 rgba(96,70,255, .4);
 }
 
 
@@ -75,7 +76,6 @@
     border: solid yellow 2px;
     transition: all .3s;
     border: none;
-    box-shadow: inset 5px -5px 10px #13141a, inset -5px 5px 10px #333644;
 }
 
 .searchbar2 {
