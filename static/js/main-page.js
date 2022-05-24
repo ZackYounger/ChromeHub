@@ -58,19 +58,19 @@ fetch('https://hero.highgateschool.org.uk/planner',
     });*/
 
 
-
+/*
 const find = require('modules/local-devices');
 
 find().then(devices => {
-  devices /*
+  devices
   [
     { name: '?', ip: '192.168.0.10', mac: '...' },
     { name: '...', ip: '192.168.0.17', mac: '...' },
     { name: '...', ip: '192.168.0.21', mac: '...' },
     { name: '...', ip: '192.168.0.22', mac: '...' }
   ]
-  */
-})
+
+})*/
 
 
 
