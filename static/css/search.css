@@ -65,11 +65,11 @@
 
 .searchbar-box2 {
     display:inline-flex;
-    padding-top: 4rem;
+    padding-top: 8rem;
     justify-content: center;
     align-items: center;
     width: 100%;
-    transform: translate(0%, 40%);
+    transform: translate(0%, -40%);
 }
 
 .searchbar {

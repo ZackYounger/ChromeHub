@@ -40,7 +40,7 @@ body {
 	color: #ffffff;
 	height: 400px;
 	width: 650px;
-	margin-top: 25px;
+	margin-top: -100px;
 	left: 0;
 	transform: scale(0.7);
 }

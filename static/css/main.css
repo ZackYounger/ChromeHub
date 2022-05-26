@@ -2,7 +2,7 @@ body {
     background: rebeccapurple;
     display: grid;
     place-content: center;
-    font-family: "Comic Sans MS", serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 #page {
@@ -77,4 +77,18 @@ img {
     width: 150px;
     height: 220px;
     display: inline-flex;
+}
+
+.zoogleImage {
+    width: 350px;
+    height: 150px;
+    position: relative;
+    display:inline-flex;
+    padding-top: 8rem;
+    justify-content: center;
+    align-items: center;
+    background: transparent url("../assets/zoogleFinal.png");
+    left: 50%;
+    transform: translate(-50%, 40%);
+    filter: blur(0px);
 }
