@@ -29,52 +29,6 @@ var search;
 var pushData = [];
 
 
-
-/*var heroCookies = {'SessionSecureA':'bdgYqXxhVYAlxaONmsl0PsvWzEWPPSVnD6Xjk68HonMxtOuI9Qv4sm3u7v3ev1EWaOw=',
-'SessionSecureB':''}
-
-fetch('https://hero.highgateschool.org.uk/planner',
-    {headers: {
-    'User-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36',
-    'access-control-allow-origin:':'*'}}
-    )
-    .then(function (response) {
-        console.log(response)
-        switch (response.status) {
-            // status "OK"
-            case 200:
-                return response.text();
-            // status "Not Found"
-            case 404:
-                throw response;
-        }
-    })
-    .then(function (template) {
-        console.log(template);
-    })
-    .catch(function (response) {
-        // "Not Found"
-        console.log(response.statusText);
-    });*/
-
-
-/*
-const find = require('modules/local-devices');
-
-find().then(devices => {
-  devices
-  [
-    { name: '?', ip: '192.168.0.10', mac: '...' },
-    { name: '...', ip: '192.168.0.17', mac: '...' },
-    { name: '...', ip: '192.168.0.21', mac: '...' },
-    { name: '...', ip: '192.168.0.22', mac: '...' }
-  ]
-
-})*/
-
-
-
-
 async function doWeather() {
 
     const date = new Date();
@@ -147,6 +101,14 @@ function updateWeatherStats (stats) {
 
 window.onload  = function () {
 
+    // Add squares
+    console.log('run')
+    const squares = document.querySelector('.squares');
+    for (var i = 1; i < 365; i++) {
+        const level = Math.floor(Math.random() * 3);squares.insertAdjacentHTML('beforeend', `<li data-level="${level}"></li>`);
+    }
+
+
     //weather elements
     dayButtons = document.getElementsByClassName('dayButton');
     activeDayButton = dayButtons[0];
@@ -176,11 +138,6 @@ window.onload  = function () {
 
     function mousemove(event) {
         selector.style.transition = '200ms';
-        //if (event != null) {
-            //console.log(
-            //    "clientX: ", event.clientX,
-            //    "clientY:", event.clientY);
-            //}
 
         closest = containerCoords.reduce((a, b) => {
             return Math.abs(b - event.clientY) < Math.abs(a - event.clientY) ? b : a;
@@ -248,10 +205,8 @@ window.onload  = function () {
 
 
     function resize() {
-        console.log('resize')
         containersX = containers[0].getBoundingClientRect().x + containers[0].getBoundingClientRect().width/2 - selectorData.width/2;
         accContainersX = containersX + selectorData.width/2;
-        console.log(accContainersX)
     }
     window.addEventListener('resize',resize)
 };
