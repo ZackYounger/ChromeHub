@@ -28,6 +28,9 @@ var search;
 
 var pushData = [];
 
+//calendar
+const calendarContainer = document.getElementsByClassName('graph');
+console.log(calendarContainer)
 
 async function doWeather() {
 
@@ -101,7 +104,8 @@ function updateWeatherStats (stats) {
 window.onload  = function () {
 
     //calendar
-    const calendarContainer = document.getElementById('graph')
+    const calendarContainer = document.getElementsByClassName('graph')[0];
+    console.log(calendarContainer)
 
     //weather elements
     const dayButtons = document.getElementsByClassName('dayButton');
@@ -200,7 +204,11 @@ window.onload  = function () {
         containersX = containers[0].getBoundingClientRect().x + containers[0].getBoundingClientRect().width/2 - selectorData.width/2;
         accContainersX = containersX + selectorData.width/2;
 
-        console.log(resize)
+        if (window.innerWidth > 1800) {
+            calendarContainer.style.opacity = '100%';
+        } else {
+            calendarContainer.style.opacity = '0%'
+        }
     }
     window.addEventListener('resize',resize)
 };

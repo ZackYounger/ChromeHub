@@ -3,12 +3,12 @@
 /* Grid-related CSS */
 
 :root {
-  --square-size: 20px;
-  --square-gap: 6px;
-  --week-width: calc(var(--square-size) + var(--square-gap));
-  --constGray: #222831;
-  --Xdelta: -55px;
-  --Ydelta: -20px;
+    --square-size: 20px;
+    --square-gap: 6px;
+    --week-width: calc(var(--square-size) + var(--square-gap));
+    --constGray: #222831;
+    --Xdelta: -55px;
+    --Ydelta: -20px;
 }
 
 .months { grid-area: months; }
@@ -16,26 +16,33 @@
 .squares { grid-area: squares; }
 
 .graph {
-  position: absolute;
-  top: 70%;
-  right: 20%;
-  display: inline-grid;
-  grid-template-areas: "empty months"
+    /*overflow: hidden;*/
+    position: absolute;
+    top: 70%;
+    right: 400px;
+    display: grid;
+    grid-template-areas: "empty months"
                        "days squares";
-  background: var(--constGray);
-  border-radius: 15px;
-  width: 1415px;
-  height: 230px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 12px;
-  color: white;
+    background: var(--constGray);
+    border-radius: 15px;
+    width: 1415px;
+    height: 230px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 12px;
+    color: white;
+    opacity: 100%;
+    transition: 1s;
+}
+.graph:hover {
+    width: 1650px;
+    transition: 1s;
 }
 
 .months {
-  transform: translateX(var(--Xdelta));
-  list-style: none;
-  display: grid;
-  grid-template-columns: calc(var(--week-width) * 4) /* Jan */
+    transform: translateX(var(--Xdelta));
+    list-style: none;
+    display: grid;
+    grid-template-columns: calc(var(--week-width) * 4) /* Jan */
                          calc(var(--week-width) * 4) /* Feb */
                          calc(var(--week-width) * 4) /* Mar */
                          calc(var(--week-width) * 5) /* Apr */
@@ -56,33 +63,43 @@
 
 .days,
 .squares {
-  display: grid;
-  grid-gap: var(--square-gap);
-  grid-template-rows: repeat(7, var(--square-size));
-  list-style: none;
+    display: grid;
+    grid-gap: var(--square-gap);
+    grid-template-rows: repeat(7, var(--square-size));
+    list-style: none;
 
 }
 
 .squares {
-  grid-auto-flow: column;
-  grid-auto-columns: var(--square-size);
-  transform: translate(var(--Xdelta), var(--Ydelta));
+    grid-auto-flow: column;
+    grid-auto-columns: var(--square-size);
+    transform: translate(var(--Xdelta), var(--Ydelta));
 }
 
 
 /* Other styling
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 12px;
 }*/
 
 
 .days li:nth-child(odd) {
-  visibility: hidden;
+    visibility: hidden;
 }
 
 .squares li {
-  border-radius: 10%;
-  list-style: none;
+    border-radius: 10%;
+    list-style: none;
+}
+
+.calender-manager {
+    position: relative;
+    width: 1px;
+    height: 1px;
+    left: 1400px;
+    top: 70px;
+    background: white;
+    border-radius: 10px;
 }
