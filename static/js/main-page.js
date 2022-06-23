@@ -200,6 +200,7 @@ window.onload  = function () {
         containersX = containers[0].getBoundingClientRect().x + containers[0].getBoundingClientRect().width/2 - selectorData.width/2;
         accContainersX = containersX + selectorData.width/2;
 
+        console.log(resize)
     }
     window.addEventListener('resize',resize)
 };
