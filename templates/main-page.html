@@ -20,7 +20,6 @@
     </div>
 
 
-
     <div class="main-weather-container">
         <div class="weather-side">
             <div class="weather-gradient"></div>
@@ -148,6 +147,38 @@
     </div>
     <span id="selector"></span>
 </div>
+
+<script>
+
+    pullData = {{ data | tojson }}
+
+    today = new Date();
+    const daysInMonths = [31,28,31,30,31,30,31,31,30,31,30,31]
+    dataIndex = today.getDate() - 1
+    for (var i=0;i<today.getMonth();i++) {
+        dataIndex += daysInMonths[i];
+    }
+    console.log(dataIndex)
+    const squares = document.querySelector('.squares');
+    for (var i = 1; i < dataIndex; i++) {
+        const score = pullData[i]['score'];
+        if (0 <= score && score < 0.2) {
+            color = 'FF0000FF';
+        } else if (0.2 <= score && score < 1) {
+            color = 'FF8C00FF';
+        } else if (1 <= score && score < 1.5){
+            color = '008000FF';
+        } else if (1.5 <= score) {
+            color = '8A2BE2FF';
+        } else {
+            color = '#000000';
+        }
+        squares.insertAdjacentHTML('beforeend', `<li style="background: ${'#'+color}"></li>`);
+    }
+    color = '0047AB';
+    squares.insertAdjacentHTML('beforeend', `<li style="background: ${'#'+color}"></li>`);
+
+</script>
 
 
 {% endblock %}

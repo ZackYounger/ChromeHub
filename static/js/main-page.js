@@ -64,7 +64,6 @@ async function doWeather() {
         i++;
     }
 
-    console.log(pushData);
 
     document.getElementsByClassName('weather-temp')[0].innerHTML = (Math.round(weatherData['current']['temp']*10)/10).toString() + "°C";
     //document.getElementsByClassName('weather-bound min-temp')[0].innerHTML = Math.round(weatherData['daily'][0]['temp']['min']).toString() + "°C";
@@ -101,29 +100,19 @@ function updateWeatherStats (stats) {
 
 window.onload  = function () {
 
-    // Add squares
-
-    //var data = JSON.parse(calandar.csv);
-
-    console.log('run')
-    const squares = document.querySelector('.squares');
-    for (var i = 1; i < 365; i++) {
-        const level = Math.floor(Math.random() * 3);
-        squares.insertAdjacentHTML('beforeend', `<li data-level="${level}" style="background: red;"></li>`);
-    }
-
+    //calendar
+    const calendarContainer = document.getElementById('graph')
 
     //weather elements
-    dayButtons = document.getElementsByClassName('dayButton');
-    activeDayButton = dayButtons[0];
-    console.log(dayButtons)
+    const dayButtons = document.getElementsByClassName('dayButton');
+    const activeDayButton = dayButtons[0];
 
     //url selector elements
     const selectorMenu = document.getElementById('selectorMenu');
     const selector = document.getElementById('selector');
     const selectorData = selector.getBoundingClientRect();
     const containers = document.getElementsByClassName('svg-container');
-    search = document.getElementsByClassName('searchbar2')[0];
+    const search = document.getElementsByClassName('searchbar2')[0];
 
     doWeather();
 
@@ -199,7 +188,6 @@ window.onload  = function () {
     window.addEventListener('mousedown',mouseclick);
 
     function enter(event) {
-        console.log('enter unction');
         if (event.key === "Enter") {
             redirectLink = "https://www.google.com/search?q=" + search.value.replaceAll(" ","+");
             window.location.href = redirectLink;
@@ -211,6 +199,7 @@ window.onload  = function () {
     function resize() {
         containersX = containers[0].getBoundingClientRect().x + containers[0].getBoundingClientRect().width/2 - selectorData.width/2;
         accContainersX = containersX + selectorData.width/2;
+
     }
     window.addEventListener('resize',resize)
 };

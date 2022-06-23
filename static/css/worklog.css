@@ -18,7 +18,7 @@
 .graph {
   position: absolute;
   top: 70%;
-  left: 3%;
+  right: 20%;
   display: inline-grid;
   grid-template-areas: "empty months"
                        "days squares";
@@ -84,18 +84,5 @@ body {
 
 .squares li {
   border-radius: 10%;
-  background-color: #ebedf0;
   list-style: none;
 }
-/*
-.squares li[data-level="1"] {
-  background-color: #c6e48b;
-}
-
-.squares li[data-level="2"] {
-  background-color: #7bc96f;
-}
-
-.squares li[data-level="3"] {
-  background-color: #196127;
-}*/

@@ -78,17 +78,3 @@ img {
     height: 220px;
     display: inline-flex;
 }
-/*
-.zoogleImage {
-    width: 350px;
-    height: 150px;
-    position: relative;
-    display:inline-flex;
-    padding-top: 8rem;
-    justify-content: center;
-    align-items: center;
-    background: transparent url("../assets/zoogleFinal.png");
-    left: 50%;
-    transform: translate(-50%, 40%);
-    filter: blur(0px);
-}*/
