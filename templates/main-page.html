@@ -120,10 +120,11 @@
           <!-- added via javascript -->
         </ul>
         <div class="calender-manager">
-            <h1>Hello!</h1>
-            <form>
-                Question Yes
-            </form>
+            <div class="calendar-button">
+                <form>
+                    Question Yes
+                </form>
+            </div>
         </div>
   </div>
 
@@ -164,6 +165,7 @@
     for (var i=0;i<today.getMonth();i++) {
         dataIndex += daysInMonths[i];
     }
+    dataIndex = 364
     console.log(dataIndex)
     const squares = document.querySelector('.squares');
     for (var i = 1; i < dataIndex; i++) {

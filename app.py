@@ -24,8 +24,8 @@ def index():
                 dict['score'] = score
                 pushData.append(dict)
 
-    for entry in pushData:
-        print(entry)
+    #for entry in pushData:
+    #    print(entry)
 
     return render_template("main-page.html", data=pushData)
 

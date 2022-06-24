@@ -21,6 +21,7 @@ body {
     border-radius: 35px;
     right: 8%;
     top: 9%;
+    transition: 1s;
 }
 
 #selector {

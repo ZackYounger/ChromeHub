@@ -24,7 +24,10 @@ var accContainersX;
 var pushDistance;
 var highlightDistance = 400;
 var selectionDistance = 80;
+var selectorMenuOffset = 8
+var selectorOffset = 0;
 var search;
+var workMode = false;
 
 var pushData = [];
 
@@ -69,8 +72,6 @@ async function doWeather() {
 
 
     document.getElementsByClassName('weather-temp')[0].innerHTML = (Math.round(weatherData['current']['temp']*10)/10).toString() + "°C";
-    //document.getElementsByClassName('weather-bound min-temp')[0].innerHTML = Math.round(weatherData['daily'][0]['temp']['min']).toString() + "°C";
-    //document.getElementsByClassName('weather-bound max-temp')[0].innerHTML = Math.round(weatherData['daily'][0]['temp']['max']).toString() + "°C";
     document.getElementsByClassName('date-time')[0].innerHTML = 'London, GB';
     document.getElementsByClassName('value precipitation')[0].innerHTML = weatherData['daily'][0]['pop'].toString() + "%";
     document.getElementsByClassName('value humidity')[0].innerHTML = weatherData['current']['humidity'].toString() + "%";
@@ -105,7 +106,7 @@ window.onload  = function () {
 
     //calendar
     const calendarContainer = document.getElementsByClassName('graph')[0];
-    console.log(calendarContainer)
+    const calendarButton = document.getElementsByClassName('calendar-button')[0];
 
     //weather elements
     const dayButtons = document.getElementsByClassName('dayButton');
@@ -188,6 +189,15 @@ window.onload  = function () {
             const redirectLink = sitesURLs[index];
             window.location.href = redirectLink;
         }
+        calendarButton.onclick = function () {
+            workMode = !(workMode)
+            selectorMenuOffset = selectorMenuOffset * -1
+            console.log(workMode)
+            selectorMenu.style.right = selectorMenuOffset.toString() + '%';
+            selectorOffest
+            selector.style.left =  selectorMenuOffset.toString() + '%';
+        }
+
     }
     window.addEventListener('mousedown',mouseclick);
 
@@ -204,11 +214,12 @@ window.onload  = function () {
         containersX = containers[0].getBoundingClientRect().x + containers[0].getBoundingClientRect().width/2 - selectorData.width/2;
         accContainersX = containersX + selectorData.width/2;
 
-        if (window.innerWidth > 1800) {
+        if (window.innerWidth > 1500) {
             calendarContainer.style.opacity = '100%';
         } else {
             calendarContainer.style.opacity = '0%'
         }
     }
     window.addEventListener('resize',resize)
+    resize();
 };
