@@ -146,7 +146,7 @@ window.onload  = function () {
         root.style.setProperty('--selectorY', (closest - containerHeight/2 + 10).toString() + "px");
 
         distance = (Math.abs(event.clientX - accContainersX));
-        if (distance < highlightDistance) {
+        if (distance < highlightDistance && !(workMode)) {
             pushDistance = (highlightDistance - distance)/(highlightDistance/100);
         } else {
             pushDistance = 0;
@@ -194,8 +194,13 @@ window.onload  = function () {
             selectorMenuOffset = selectorMenuOffset * -1
             console.log(workMode)
             selectorMenu.style.right = selectorMenuOffset.toString() + '%';
-            selectorOffest
-            selector.style.left =  selectorMenuOffset.toString() + '%';
+            if (workMode) {
+                root.style.setProperty('--distanceSelector', "0%");
+            } else {
+                setTimeout(function () {
+                    root.style.setProperty('--distanceSelector', "30%");
+                }, 800)
+            }
         }
 
     }
