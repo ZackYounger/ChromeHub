@@ -96,8 +96,15 @@
 }
 
 .calendar-button {
-    background:  gray;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    background: red;
     width: 100px;
     height: 100px;
     border-radius: 50%;
+    text-align: center;
+    vertical-align: center;
+    font-size: 18px;
 }

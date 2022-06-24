@@ -17,23 +17,24 @@ var months = ['January','February','March','April','May','June','July','August',
 
 const root = document.querySelector(':root');
 
-var closest;
-var distance;
-var containersX;
-var accContainersX;
-var pushDistance;
-var highlightDistance = 400;
-var selectionDistance = 80;
-var selectorMenuOffset = 8
-var selectorOffset = 0;
-var search;
-var workMode = false;
+let closest;
+let distance;
+let containersX;
+let accContainersX;
+let pushDistance;
+let highlightDistance = 400;
+let selectionDistance = 80;
+let selectorMenuOffset = 8
+let selectorOffset = 0;
+let search;
+let workMode = false;
 
-var pushData = [];
+let pushData = [];
 
 //calendar
-const calendarContainer = document.getElementsByClassName('graph');
-console.log(calendarContainer)
+let calendarContainer;
+let calendarButton;
+
 
 async function doWeather() {
 
@@ -105,8 +106,8 @@ function updateWeatherStats (stats) {
 window.onload  = function () {
 
     //calendar
-    const calendarContainer = document.getElementsByClassName('graph')[0];
-    const calendarButton = document.getElementsByClassName('calendar-button')[0];
+    calendarContainer = document.getElementsByClassName('graph')[0];
+    calendarButton = document.getElementsByClassName('calendar-button')[0];
 
     //weather elements
     const dayButtons = document.getElementsByClassName('dayButton');
@@ -195,11 +196,18 @@ window.onload  = function () {
             console.log(workMode)
             selectorMenu.style.right = selectorMenuOffset.toString() + '%';
             if (workMode) {
+                startTime = Math.round(Date.now() / 1000)
+                calendarButton.style.background = 'green';
                 root.style.setProperty('--distanceSelector', "0%");
+                refreshTimeWorked = setInterval(updateTimeWorked, 100);
             } else {
+                clearInterval(refreshTimeWorked)
+                endTime = Math.round(Date().now / 1000)
+                calendarButton.style.background = 'red';
                 setTimeout(function () {
                     root.style.setProperty('--distanceSelector', "30%");
                 }, 800)
+                calendarButton.innerHTML = 'Start';
             }
         }
 
@@ -228,3 +236,9 @@ window.onload  = function () {
     window.addEventListener('resize',resize)
     resize();
 };
+
+function updateTimeWorked() {
+    console.log('f')
+    timePassed = startTime - Math.round(Date.now() / 1000)
+    calendarButton.innerHTML = '00:00'
+}
