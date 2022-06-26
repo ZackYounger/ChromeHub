@@ -127,27 +127,51 @@
 
 
 
-    <div id="selectorMenu">
-        <div id="selector-bg"></div>
-        <div class="svg-container">
-            <img src="../static/assets/github.svg">
+    <div class="selectorMenu leisure">
+        <div class="selector-bg"></div>
+        <div class="svg-container leisure">
+            <img src="../static/assets/leisureImages/github.svg">
         </div>
-        <div class="svg-container">
-            <img src="../static/assets/youtube.svg">
+        <div class="svg-container leisure">
+            <img src="../static/assets/leisureImages/youtube.svg">
         </div>
-        <div class="svg-container">
-            <img src="../static/assets/twitter.svg">
+        <div class="svg-container leisure">
+            <img src="../static/assets/leisureImages/twitter.svg">
         </div>
-        <div class="svg-container">
-            <img src="../static/assets/twitch.svg">
+        <div class="svg-container leisure">
+            <img src="../static/assets/leisureImages/twitch.svg">
         </div>
-        <div class="svg-container">
-            <img src="../static/assets/hero.svg">
+        <div class="svg-container leisure">
+            <img src="../static/assets/leisureImages/hero.svg">
         </div>
-        <div class="svg-container">
-            <img src="../static/assets/hero-mail.svg">
+        <div class="svg-container leisure">
+            <img src="../static/assets/leisureImages/hero-mail.svg">
         </div>
     </div>
+
+    <div class="selectorMenu work">
+        <div class="selector-bg"></div>
+        <div class="svg-container work">
+            <img src="../static/assets/workImages/pure.svg">
+        </div>
+        <div class="svg-container work">
+            <img src="../static/assets/workImages/stats.svg">
+        </div>
+        <div class="svg-container work">
+            <img src="../static/assets/workImages/mech.svg">
+        </div>
+        <div class="svg-container work">
+            <img src="../static/assets/workImages/physics.svg">
+        </div>
+        <div class="svg-container work">
+            <img src="../static/assets/workImages/compsci.svg">
+        </div>
+        <div class="svg-container work">
+            <img src="../static/assets/workImages/plus.svg">
+        </div>
+    </div>
+
+
     <span id="selector"></span>
 </div>
 
@@ -157,30 +181,41 @@
 
     today = new Date();
     const daysInMonths = [31,28,31,30,31,30,31,31,30,31,30,31]
-    dataIndex = today.getDate() - 1
+    todayIndex = today.getDate() - 1 + 0
     for (var i=0;i<today.getMonth();i++) {
-        dataIndex += daysInMonths[i];
+        todayIndex += daysInMonths[i];
     }
-    dataIndex = 364
-    console.log(dataIndex)
+    //dataIndex = 364
     const squares = document.querySelector('.squares');
-    for (var i = 1; i < dataIndex; i++) {
+    for (var i = 1; i < 365; i++) {
         const score = pullData[i]['score'];
-        if (0 <= score && score < 0.2) {
+        if (i == todayIndex) {
+            color = '0047AB';
+        } else if (0 <= score && score < 0.5) {
             color = 'FF0000FF';
-        } else if (0.2 <= score && score < 1) {
+        } else if (0.5 <= score && score < 1) {
             color = 'FF8C00FF';
         } else if (1 <= score && score < 1.5){
             color = '008000FF';
         } else if (1.5 <= score) {
             color = '8A2BE2FF';
         } else {
-            color = '#000000';
+            color = '000000';
         }
-        squares.insertAdjacentHTML('beforeend', `<li style="background: ${'#'+color}"></li>`);
+        if (i <= todayIndex) {
+            squares.insertAdjacentHTML('beforeend', `<li style="background: ${'#' + color}"></li>`);
+        } else {
+            squares.insertAdjacentHTML('beforeend', `<li style="border: darkslategray 1px solid;"></li>`);
+        }
     }
-    color = '0047AB';
-    squares.insertAdjacentHTML('beforeend', `<li style="background: ${'#'+color}"></li>`);
+
+    function workButtons() {
+        console.log('AAAAAAAAAAAAA')
+        buttons = document.getElementsByClassName('container work')
+        for (button of buttons) {
+            button.style.background = 'red';
+        }
+    }
 
 </script>
 

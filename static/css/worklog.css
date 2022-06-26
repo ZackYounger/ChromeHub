@@ -32,6 +32,7 @@
     color: white;
     opacity: 0%;
     transition: 1s;
+    border: gray;
 }
 .graph:hover {
     width: 1650px;
@@ -91,7 +92,7 @@
     width: 1px;
     height: 1px;
     left: 1400px;
-    top: 65px;
+    top: 50px;
     transform: translateX(120px);
 }
 

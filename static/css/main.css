@@ -15,14 +15,19 @@ body {
     overflow: hidden;
 }
 
-#selectorMenu {
+.selectorMenu {
     position: absolute;
     background: mediumslateblue;
     border-radius: 35px;
-    right: 8%;
     top: 9%;
     transition: .8s;
     overflow: hidden;
+}
+.leisure {
+    right: 8%;
+}
+.work {
+    right: -15%;
 }
 
 #selector {
@@ -39,7 +44,7 @@ body {
     transition: .5s;
 }
 
-#selector-bg {
+.selector-bg {
     position: absolute;
     left: 0;
     top: 0;
@@ -54,6 +59,7 @@ body {
     width: 8rem;
     height: 8rem;
     border-radius: 30%;
+    transition: .3s;
 }
 
 img {

@@ -14,6 +14,8 @@ const weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','S
 const weekdaysShort = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
+const subjects = ['pure','stats','mech','physics','compsci','else'];
+var subjectIndex = -1;
 
 const root = document.querySelector(':root');
 
@@ -24,7 +26,7 @@ let accContainersX;
 let pushDistance;
 let highlightDistance = 400;
 let selectionDistance = 80;
-let selectorMenuOffset = 8
+let selectorMenuOffset = 8;
 let selectorOffset = 0;
 let search;
 let workMode = false;
@@ -35,6 +37,7 @@ let pushData = [];
 let calendarContainer;
 let calendarButton;
 
+let weatherContainer;
 
 async function doWeather() {
 
@@ -112,13 +115,18 @@ window.onload  = function () {
     //weather elements
     const dayButtons = document.getElementsByClassName('dayButton');
     const activeDayButton = dayButtons[0];
+    weatherContainer = document.getElementsByClassName('main-weather-container')[0];
 
     //url selector elements
-    const selectorMenu = document.getElementById('selectorMenu');
+    const selectorMenu = document.getElementsByClassName('selectorMenu')[0];
     const selector = document.getElementById('selector');
     const selectorData = selector.getBoundingClientRect();
-    const containers = document.getElementsByClassName('svg-container');
+    const containers = document.getElementsByClassName('svg-container leisure');
+    const workContainers = document.getElementsByClassName('svg-container work');
+
     const search = document.getElementsByClassName('searchbar2')[0];
+
+    const workSelectorMenu = document.getElementsByClassName('selectorMenu')[1];
 
     doWeather();
 
@@ -133,7 +141,10 @@ window.onload  = function () {
     for (container of containers) {
         const data = container.getBoundingClientRect();
         containerCoords.push(data.y + data.height - selectorData.height/2 - 10);
+
     }
+
+
 
     function mousemove(event) {
         selector.style.transition = '200ms';
@@ -147,7 +158,8 @@ window.onload  = function () {
         root.style.setProperty('--selectorY', (closest - containerHeight/2 + 10).toString() + "px");
 
         distance = (Math.abs(event.clientX - accContainersX));
-        if (distance < highlightDistance && !(workMode)) {
+        //if (distance < highlightDistance && !(workMode)) {
+        if (distance < highlightDistance) {
             pushDistance = (highlightDistance - distance)/(highlightDistance/100);
         } else {
             pushDistance = 0;
@@ -187,27 +199,54 @@ window.onload  = function () {
     function mouseclick(event) {
         if (distance < selectionDistance) {
             const index = containerCoords.indexOf(closest);
-            const redirectLink = sitesURLs[index];
-            window.location.href = redirectLink;
+            if (!workMode) {
+                const redirectLink = sitesURLs[index];
+                window.location.href = redirectLink;
+            } else {
+                for (container of workContainers) {
+                    container.style.background = 'transparent';
+                }
+                workContainers[index].style.background = 'blue';
+                subjectIndex = index
+            }
         }
+
         calendarButton.onclick = function () {
-            workMode = !(workMode)
-            selectorMenuOffset = selectorMenuOffset * -1
-            console.log(workMode)
-            selectorMenu.style.right = selectorMenuOffset.toString() + '%';
-            if (workMode) {
+            if (!workMode) {
+                workMode = true
                 startTime = Math.round(Date.now() / 1000)
                 calendarButton.style.background = 'green';
-                root.style.setProperty('--distanceSelector', "0%");
-                refreshTimeWorked = setInterval(updateTimeWorked, 100);
-            } else {
-                clearInterval(refreshTimeWorked)
-                endTime = Math.round(Date().now / 1000)
+                refreshTimeWorked = setInterval(updateTimeWorked, 1000);
+
+                selectorMenu.style.right = '-15%';
+                workSelectorMenu.style.right = '8%';
+                weatherContainer.style.marginLeft = '-600px';
+
+            } else if (subjectIndex >= 0) {
+                workMode = false
+
+                selectorMenu.style.right = '8%';
+                workSelectorMenu.style.right = '-15%';
+                weatherContainer.style.marginLeft = '0px';
+
                 calendarButton.style.background = 'red';
                 setTimeout(function () {
                     root.style.setProperty('--distanceSelector', "30%");
                 }, 800)
                 calendarButton.innerHTML = 'Start';
+
+                clearInterval(refreshTimeWorked)
+                endTime = Math.round(Date.now() / 1000)
+                duration = endTime - startTime
+
+                if (duration > 1) { //allows for accidental clicks within 10 secs
+                    const request = new XMLHttpRequest()
+                    request.open(`POST`, `/receiveData/${[duration, subjects[subjectIndex]]}`)
+                    request.send()
+                    console.log('send data')
+                }
+            } else {
+                alert('select a subject!')
             }
         }
 
@@ -227,7 +266,7 @@ window.onload  = function () {
         containersX = containers[0].getBoundingClientRect().x + containers[0].getBoundingClientRect().width/2 - selectorData.width/2;
         accContainersX = containersX + selectorData.width/2;
 
-        if (window.innerWidth > 1500) {
+        if (window.innerWidth > 500) {
             calendarContainer.style.opacity = '100%';
         } else {
             calendarContainer.style.opacity = '0%'
@@ -238,7 +277,7 @@ window.onload  = function () {
 };
 
 function updateTimeWorked() {
-    console.log('f')
-    timePassed = startTime - Math.round(Date.now() / 1000)
-    calendarButton.innerHTML = '00:00'
+    timePassed = Math.round(Date.now() / 1000) - startTime
+    formattedTime = '0' + Math.floor(timePassed / 60).toString() + ':' + (timePassed % 60).toString().padStart(2,'0');
+    calendarButton.innerHTML = formattedTime
 }

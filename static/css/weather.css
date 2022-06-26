@@ -41,8 +41,9 @@ body {
 	height: 400px;
 	width: 650px;
 	margin-top: -100px;
-	left: 0;
+	margin-left: 0px;
 	transform: scale(0.7);
+	transition: .8s;
 }
 
 .weather-side {
