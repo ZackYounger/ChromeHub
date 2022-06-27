@@ -5,7 +5,7 @@ import datetime
 
 app = Flask(__name__)
 
-subjects = ['pure','stats','mech','physics','compsci','else']
+subjectList = ['pure','stats','mech','physics','compsci','else']
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -23,24 +23,20 @@ def index():
 def receiveData(data):
     data = data.split(',')
     time, subject = int(data[0]),data[1]
-    time = time / 60
+    time = time / 3600
     year, month, day = str(date.today()).split('-')
     year, month, day = int(year), int(month), int(day)
-    index = dateToIndex(day,month)
+    dayIndex = dateToIndex(day,month)
     calendarData = getData()
-    calendarData[index][subject] += time
+    calendarData[dayIndex][subject] += time
 
-    print(calendarData[dateToIndex(25,6)])
-    print(sum(int(calendarData[dateToIndex(25,6)][subj]) for subj in subjects))
-    print([int(calendarData[dateToIndex(25, 6)][subj]) for subj in subjects])
-    print([subj for subj in subjects])
-    print(calendarData[dateToIndex(25, 6)]['pure'])
-    calendarData[dateToIndex(25, 6)[subjects[0]]]
+
 
     for index,entry in enumerate(calendarData):
-        calendarData[index]['score'] = sum(int(entry[subj]) for subj in subjects)
-        if calendarData[index]['score'] != 0:
-            print(calendarData[index]['score'])
+        score = 0
+        for subj in subjectList:
+            score += entry[subj]
+        calendarData[index]['score'] = score
 
     saveData(calendarData)
 
@@ -84,7 +80,7 @@ def dateToIndex(day, month):
     while m != month - 1:
         returnIndex += daysInMonths[m]
         m += 1
-    return returnIndex + day
+    return returnIndex + day - 1
 
 
 if __name__ == "__main__":

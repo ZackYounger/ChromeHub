@@ -239,7 +239,7 @@ window.onload  = function () {
                 endTime = Math.round(Date.now() / 1000)
                 duration = endTime - startTime
 
-                if (duration > 1) { //allows for accidental clicks within 10 secs
+                if (duration > 10) { //allows for accidental clicks within 10 secs
                     const request = new XMLHttpRequest()
                     request.open(`POST`, `/receiveData/${[duration, subjects[subjectIndex]]}`)
                     request.send()
@@ -275,9 +275,3 @@ window.onload  = function () {
     window.addEventListener('resize',resize)
     resize();
 };
-
-function updateTimeWorked() {
-    timePassed = Math.round(Date.now() / 1000) - startTime
-    formattedTime = '0' + Math.floor(timePassed / 60).toString() + ':' + (timePassed % 60).toString().padStart(2,'0');
-    calendarButton.innerHTML = formattedTime
-}
