@@ -13,9 +13,6 @@ def index():
         pass
     else:
         pushData = getData()
-        print(pushData)
-        # for entry in pushData:
-        #    print(entry)
         return render_template("main-page.html", data=pushData)
 
 

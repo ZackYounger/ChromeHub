@@ -266,7 +266,7 @@ window.onload  = function () {
         containersX = containers[0].getBoundingClientRect().x + containers[0].getBoundingClientRect().width/2 - selectorData.width/2;
         accContainersX = containersX + selectorData.width/2;
 
-        if (window.innerWidth > 500) {
+        if (window.innerWidth > 1850) {
             calendarContainer.style.opacity = '100%';
         } else {
             calendarContainer.style.opacity = '0%'

@@ -1,7 +1,7 @@
 function updateCalendar(pullData) {
     today = new Date();
-    const daysInMonths = [31,28,31,30,31,30,31,31,30,31,30,31]
-    todayIndex = today.getDate() - 1
+    const daysInMonths = [31,28,31,30,31,30,31,31,30,31,30,31];
+    todayIndex = today.getDate() - 1;
     for (var i=0;i<today.getMonth();i++) {
         todayIndex += daysInMonths[i];
     }
